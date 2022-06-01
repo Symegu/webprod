@@ -1,5 +1,4 @@
 export default function timer(timerMinute) {
-    console.log(timerMinute)
     setInterval(function () {
     let seconds = timerMinute%60
     let minutes = timerMinute/60%60
@@ -7,6 +6,11 @@ export default function timer(timerMinute) {
     if (timerMinute <= 0) {
         clearInterval(timer);
         alert("Время закончилось");
+        let sound = new Howl({
+            src: ['sound.mp3']
+          });
+        sound.play();
+        return timerMinute = undefined;
     } else {
         const timerShow = document.getElementById("timer");
 

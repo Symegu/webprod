@@ -26,14 +26,13 @@ const startBtn = document.getElementById("startBtn");
 const stopBtn = document.getElementById("stopBtn");
 
 startBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    console.log(timerInput.value) 
+    event.preventDefault(); 
     const timerMinute = parseInt(timerInput.value) * 60
     timer(timerMinute);
-    console.log(timerMinute)
 });
 
 stopBtn.addEventListener('click', function(event) {
     event.preventDefault();
+    console.log('stop')
     clearInterval(timer);
 });

@@ -1,19 +1,38 @@
-import { printError, printResult } from './printResult.js';
-import getDateDiff from './getDateDiff.js';
+import { diffDates, diffToHtml } from "./datecalc.js";
+import { formatError } from "./utils.js";
+import timer from "./timer.js"
 
-const form = document.getElementById('datecalc');
+const dateCalcForm = document.getElementById("datecalc");
+const dateCalcResult = document.getElementById("datecalc__result");
 
-form.onsubmit = (event) => {
+dateCalcForm.addEventListener("submit", handleCalcDates);
+
+function handleCalcDates(event) {
+  dateCalcResult.innerHTML = "";
   event.preventDefault();
-  const formData = new FormData(event.target);
-
-  const firstDate = formData.get('firstDate');
-  const secondDate = formData.get('secondDate');
-
-  if (!firstDate || !secondDate) {
-    printError('Oops - введите даты')
-  } else {
-    const dateDiff = getDateDiff(firstDate, secondDate);
-    printResult(dateDiff);
-  };
+  
+  let { firstDate, secondDate } = event.target.elements;
+  firstDate = firstDate.value, secondDate = secondDate.value;
+  
+  if (firstDate && secondDate) {
+    const diff = diffDates(firstDate, secondDate);
+    dateCalcResult.innerHTML = diffToHtml(diff);
+  } else dateCalcResult.innerHTML = formatError("Для расчета промежутка необходимо заполнить оба поля");
 }
+
+const timerInput = document.getElementById("minute");
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+
+startBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log(timerInput.value) 
+    const timerMinute = parseInt(timerInput.value) * 60
+    timer(timerMinute);
+    console.log(timerMinute)
+});
+
+stopBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+    clearInterval(timer);
+});

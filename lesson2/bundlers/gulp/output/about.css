@@ -1,0 +1,9 @@
+.about__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about__info {
+  display: flex;
+  justify-content: space-between;
+}

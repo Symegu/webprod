@@ -10,15 +10,30 @@ module.exports = {
     module: {
       rules: [
         {
-          test: /\.(png|jpe?g|gif|mp3)$/i,
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].[ext]'
-          }
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'img-optimize-loader',
+              options: {
+                compress: {
+                  mode: 'high',
+                  webp: true,
+                  gifsicle: true,
+                  disableOnDevelopment: false
+                }
+              }
+            }
+          ]
         },
         {
           test: /\.s[ac]ss$/i,
           use: ['style-loader', 'css-loader', 'sass-loader']
+        },
+        {
+          test: /\.(mp[3|4])$/i,
+          use: [
+            'file-loader'
+          ]
         }
       ]
     },
